@@ -1,0 +1,13 @@
+{
+  "challenge": "DEX",
+  "version": "1.0",
+  "started_at": "2026-05-14T00:00:00Z",
+  "checkpoints": {
+    "reserves-init": { "status": "completed", "method": "coded", "completed_at": "2026-05-14T00:00:00Z" },
+    "price": { "status": "completed", "method": "coded", "completed_at": "2026-05-14T00:00:00Z" },
+    "swapping": { "status": "completed", "method": "coded", "completed_at": "2026-05-14T00:00:00Z" },
+    "liquidity": { "status": "completed", "method": "coded", "completed_at": "2026-05-14T00:00:00Z" }
+  },
+  "currentCheckpoint": null,
+  "currentQuestion": 0
+}
