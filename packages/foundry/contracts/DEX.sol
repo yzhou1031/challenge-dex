@@ -32,7 +32,9 @@ contract DEX {
     event EthToTokenSwap(address swapper, uint256 tokenOutput, uint256 ethInput);
     event TokenToEthSwap(address swapper, uint256 tokensInput, uint256 ethOutput);
     event LiquidityProvided(address liquidityProvider, uint256 liquidityMinted, uint256 ethInput, uint256 tokensInput);
-    event LiquidityRemoved(address liquidityRemover, uint256 liquidityWithdrawn, uint256 tokensOutput, uint256 ethOutput);
+    event LiquidityRemoved(
+        address liquidityRemover, uint256 liquidityWithdrawn, uint256 tokensOutput, uint256 ethOutput
+    );
 
     ///////////////////
     /// Constructor ///
@@ -85,7 +87,7 @@ contract DEX {
         uint256 tokenReserve = token.balanceOf(address(this));
         ethOutput = price(tokenInput, tokenReserve, address(this).balance);
         token.transferFrom(msg.sender, address(this), tokenInput);
-        (bool sent, ) = msg.sender.call{value: ethOutput}("");
+        (bool sent,) = msg.sender.call{ value: ethOutput }("");
         if (!sent) revert TokenTransferFailed();
         emit TokenToEthSwap(msg.sender, tokenInput, ethOutput);
         return ethOutput;
@@ -117,7 +119,7 @@ contract DEX {
         uint256 tokensWithdrawn = amount * tokenReserve / totalLiquidity;
         liquidity[msg.sender] -= amount;
         totalLiquidity -= amount;
-        (bool sent, ) = payable(msg.sender).call{value: ethWithdrawn}("");
+        (bool sent,) = payable(msg.sender).call{ value: ethWithdrawn }("");
         if (!sent) revert EthTransferFailed(msg.sender, ethWithdrawn);
         if (!token.transfer(msg.sender, tokensWithdrawn)) revert TokenTransferFailed();
         emit LiquidityRemoved(msg.sender, amount, tokensWithdrawn, ethWithdrawn);
